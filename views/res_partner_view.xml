@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name='type'>form</field>
             <field name='arch' type='xml'>
-                <field name="country_id" position="after">
+                <field name="city" position="before">
                     <field name="city_id" placeholder="Comuna"
                            style="width: 100%" options='{"no_create": True}'/>
                 </field>
@@ -26,7 +26,7 @@
             <field name="inherit_id" ref="base.view_partner_address_form"/>
             <field name='type'>form</field>
             <field name='arch' type='xml'>
-                <field name="country_id" position="after">
+                <field name="city" position="before">
                     <field name="city_id" placeholder="Comuna"
                            style="width: 100%" options='{"no_create": True}'/>
                 </field>
@@ -44,7 +44,7 @@
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="model">res.company</field>
             <field name="arch" type="xml">
-                <field name="country_id" position="after">
+                <field name="city" position="before">
                     <field name="city_id"
                            style="width: 100%" options='{"no_create": True}'/>
                 </field>
