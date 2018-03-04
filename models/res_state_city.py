@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-# Copyright (c) 2012 Cubic ERP - Teradata SAC. (http://cubicerp.com).
+#    Copyright (c) 2012 Cubic ERP - Teradata SAC. (http://cubicerp.com).
+#    Copyright (C) 2016 Blanco Martín & Asociados - Odoo Chile Community
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -27,28 +28,26 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api
+from odoo import fields, models
 
 
-class res_partner(models.Model):
+class ResStateCity(models.Model):
+    _name = 'res.country.state.city'
+    _description = "City of state"
 
-    _inherit = 'res.partner'
-
-    city_id = fields.Many2one("res.country.state.city", 'City', domain="[('state_id','=',state_id),('type','=','normal')]")
-
-    @api.multi
-    def _asign_city(self, source):
-        if self.city_id:
-	       return {'value':{'city': self.city_id.name}}
-
-class res_company(models.Model):
-
-    _inherit = 'res.company'
-
-    city_id = fields.Many2one("res.country.state.city", 'City', domain="[('state_id','=',state_id),('type','=','normal')]")
-
-    @api.multi
-    def _asign_city(self, source):
-        if self.city_id:
-	       return {'value':{'city': self.city_id.name}}
-
+    name = fields.Char(
+        'City Name', help='The City Name.', required=True)
+    code = fields.Char(
+        'City Code', size=32, help='The city code.\n', required=True)
+    complete_name = fields.Char(
+        method=True, type="char",
+        string='Complete Name')
+    country_id = fields.Many2one(
+        'res.country', 'Country', required=True)
+    state_id = fields.Many2one(
+        'res.country.state', 'State',
+        domain="[('country_id', '=', country_id), "
+               "('type', '=', 'normal'), "
+               "('id', '!=', id)]")
+    type = fields.Selection(
+        [('view', 'View'), ('normal', 'Normal')], 'Type', default='normal')
